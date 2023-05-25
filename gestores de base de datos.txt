@@ -1,0 +1,67 @@
+#PRACTICA UD2
+
+#2. Crear usuarios y asignar permisos en local
+
+#a. Creamos un usuario llamado nombreA@localhost 
+CREATE USER 'nombre'@'localhost' IDENTIFIED BY 'contraseña';
+#comprobamos entrando en una nueva conexion de workbench
+
+#b. Creamos un usuario llamado nombreB@localhost con permisos de sólo conexión y comprueba que se puede conectar dentro del usuario creado anteriormente
+CREATE USER 'nombre2'@'localhost' IDENTIFIED BY 'contraseña';
+#comprobamos entrando en una nueva conexion de workbench
+
+#c. otorgamos al 'nombre1' permisos de select sobre la tabla y lo comprobamos
+GRANT SELECT ON 'base de datos.tabla' TO 'nombre1'@'localhost';
+#nos metemos en la conexion del usuario1 y lo comprobamos
+SELECT * FROM 'base de datos.tabla'
+
+#d. otorga al usuario2 permisos de select, insert y update a las tablas  con GRANT
+GRANT  select, insert, update on centroestudios.* to 'usuario2'@'localhost' with grant option;
+
+#e. conectate con el usuario2 y otorga permisos al usuario1 de seleccion en tabla
+GRANT SELECT, INSERT, UPDATE ON 'tabla' TO 'usuario1'@'localhost' WITH GRANT OPTION;
+#dentro del usuario1
+SELECT *
+FROM 'tabla'
+
+#f. Quitale los permisos a usuario1 de seleccion sobre la tabla
+REVOKE SELECT ON tabla FROM 'usuario1'@'localhost';
+#dentro del usuario1
+SELECT *
+FROM 'tabla'
+
+#g. conectate con root y elimina todos los permisos a usuario1 y usuario2
+REVOKE select, insert, update on 'base datos'.* FROM 'usuario1'@'localhost'; 
+REVOKE select, insert, update on 'base datos'.* FROM 'usuario2'@'localhost';
+
+#h. otorga a usuario2 permisos de select en columnas
+GRANT SELECT (columna,columna) ON 'base.tabla' TO 'usuario2'@'localhost';
+
+#i. conectate al usuario2 y ejecuta, debe dar error
+SELECT * FROM tabla;
+
+#crear un usuario 
+CREATE USER 'usuarioremoto'@'%' IDENTIFIED BY 'contraseña';
+
+#cambiarle la contraseña a un usuario creado
+CREATE USER 'usuarioremoto'@'%' IDENTIFIED BY 'nueva_contraseña';
+
+#eliminar un usuario 
+drop user 'usuarioremoto'@'%';
+
+#comando para ver los usuarios del mysql
+SELECT user, host FROM mysql.user;
+
+#Preguntas
+
+#que es phpmyadmin
+es una herramienta que se utiliza para manejar la administracion y gestion de base de datos mysql a traves de una interfaz grafica
+
+#donde se almacenan los parametros de configuracion al iniciar tu servidor mysql
+en my.ini
+
+#donde se almacenan la base de datos de mysql
+C:\ProgramData\MySQL\MySQL Server 8.0\Data
+
+#en que directorio se almacenan los programas de mysql que tienes instalados en tu equipo
+C:\Program Files\MySQL\MySQL Server 8.0
